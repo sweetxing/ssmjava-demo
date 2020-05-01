@@ -26,6 +26,6 @@ public class MenuService {
 
     @Cacheable(key = "#root.methodName")
     public List<Menu> getAllMenu() {
-        return menuMapper.getAllMenu();
+        return menuMapper.getAllMenusWithRole();
     }
 }

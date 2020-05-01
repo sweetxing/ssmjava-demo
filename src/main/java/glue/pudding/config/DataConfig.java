@@ -22,9 +22,9 @@ import java.io.IOException;
 public class DataConfig {
 
     private final String driver = "com.mysql.jdbc.Driver";
-    private final String url = "jdbc:mysql://localhost:3306/vhr?serverTimezone=UTC";
-    private final String username = "glue";
-    private final String password = "pudding";
+    private final String url = "jdbc:mysql://212.64.67.158:3008/vhr?serverTimezone=UTC";
+    private final String username = "root";
+    private final String password = "1";
 
     /*@Value("${jdbc.driver}")
     String driver;

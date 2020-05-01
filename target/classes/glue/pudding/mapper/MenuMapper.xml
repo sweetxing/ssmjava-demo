@@ -13,13 +13,42 @@
     <result column="parentId" jdbcType="INTEGER" property="parentid" />
     <result column="enabled" jdbcType="BIT" property="enabled" />
   </resultMap>
+
+  <resultMap id="MenuWithRole" type="glue.pudding.entity.Menu" extends="BaseResultMap">
+    <collection property="roles" ofType="glue.pudding.entity.Role">
+      <id column="rid" property="id"/>
+      <result column="rname" property="name"/>
+      <result column="rnameZh" property="namezh"/>
+    </collection>
+  </resultMap>
+
+  <resultMap id="MenuWithChildren" type="glue.pudding.entity.Menu" extends="BaseResultMap">
+    <id column="id1" property="id"/>
+    <result column="name1" property="name"/>
+    <collection property="children" ofType="glue.pudding.entity.Menu">
+      <id column="id2" property="id"/>
+      <result column="name2" property="name"/>
+      <collection property="children" ofType="glue.pudding.entity.Menu">
+        <id column="id3" property="id"/>
+        <result column="name3" property="name"/>
+      </collection>
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, url, path, component, name, iconCls, keepAlive, requireAuth, parentId, enabled
   </sql>
 
-  <select id="getAllMenu"  resultMap="BaseResultMap">
+  <select id="getAllMenus"  resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
     FROM menu
+  </select>
+
+  <select id="getAllMenusWithRole" resultMap="MenuWithRole">
+    SELECT m.*,r.`id` AS rid,r.`name` AS rname,r.`nameZh` as rnameZh
+    FROM menu m,menu_role mr,role r
+    WHERE m.`id`=mr.`mid` AND mr.`rid`=r.`id`
+    ORDER BY m.`id`
   </select>
 </mapper>

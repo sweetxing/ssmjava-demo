@@ -1,11 +1,15 @@
 package glue.pudding.config;
 
+import glue.pudding.entity.Menu;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 import org.springframework.data.redis.cache.RedisCacheManager;
 
@@ -16,14 +20,16 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 @EnableCaching
 public class CachingConfig {
 
-    private final int maxIdle = 8;
+    private final int maxIdle = 4;
     private final long maxWaitMills = Long.MAX_VALUE;
-    private final int maxTotal = 8;
+    private final int maxTotal = 4;
     private final boolean testOnBorrow = true;
 
     private final String host = "127.0.0.1";
+    //private final String host = "212.64.67.158";
     private final int port = 6379;
-    private final String password = "pudding";
+    private final String password = "1";
+
     @Bean
     public JedisPoolConfig poolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -49,6 +55,15 @@ public class CachingConfig {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(factory);
         return  template;
+    }
+
+    @Bean
+    public RedisTemplate<String, Menu> menuRedisTemplate(JedisConnectionFactory factory) {
+        RedisTemplate<String, Menu> template = new RedisTemplate<String, Menu>();
+        template.setConnectionFactory(factory);
+        template.setKeySerializer(new StringRedisSerializer());
+        //template.setValueSerializer(new Jackson2JsonRedisSerializer<Menu>(Menu.class));
+        return template;
     }
 
     @Bean

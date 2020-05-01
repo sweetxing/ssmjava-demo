@@ -1,7 +1,7 @@
 package glue.pudding.security;
 
 import com.alibaba.fastjson.JSONObject;
-import glue.pudding.message.ResponseBean;
+import glue.pudding.util.ResponseBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 

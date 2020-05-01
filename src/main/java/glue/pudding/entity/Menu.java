@@ -26,6 +26,8 @@ public class Menu implements Serializable {
 
     private List<Role> roles;
 
+    private List<Menu> children;
+
     public Integer getId() {
         return id;
     }
@@ -110,7 +112,16 @@ public class Menu implements Serializable {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<Role> roles)
+    {
         this.roles = roles;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 }

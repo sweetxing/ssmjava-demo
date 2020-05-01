@@ -13,6 +13,14 @@
     <result column="userface" jdbcType="VARCHAR" property="userface" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+  <resultMap id="HrWithRoles" type="glue.pudding.entity.Hr" extends="BaseResultMap">
+    <collection property="roles" ofType="glue.pudding.entity.Role">
+      <id column="rid" jdbcType="INTEGER" property="id"/>
+      <id column="rname" jdbcType="VARCHAR" property="name"/>
+      <id column="rnameZh" jdbcType="VARCHAR" property="namezh"/>
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
@@ -151,10 +159,10 @@
   </update>
 
   <!-- manual define -->
-  <select id="loadUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="loadUserByUsername" parameterType="java.lang.String" resultMap="HrWithRoles">
     SELECT
-    <include refid="Base_Column_List" />
-    FROM hr
-    WHERE username = #{username,jdbcType=VARCHAR}
+    h.*,r.`id` AS rid,r.`name` AS rname,r.`nameZh` as rnameZh
+    FROM hr h, role r, hr_role rh
+    WHERE h.`username` = #{username,jdbcType=VARCHAR} AND rh.`rid` = r.`id` AND rh.`hid` = h.`id`
   </select>
 </mapper>

@@ -1,7 +1,7 @@
 package glue.pudding.security;
 
 import com.alibaba.fastjson.JSONObject;
-import glue.pudding.message.ResponseBean;
+import glue.pudding.util.ResponseBean;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

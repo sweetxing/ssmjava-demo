@@ -11,6 +11,7 @@ import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,16 +46,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .withObjectPostProcessor(new LocalObjectPostProcessor(localMetadataSource, urlAccessDecisionManager))
                 .and()
-                .formLogin().loginProcessingUrl("/login")
+                .formLogin().loginPage("/login_page").loginProcessingUrl("/login")
                 .usernameParameter("username").passwordParameter("password")
                 .successHandler(new LocalAuthenticationSuccessHandler())
                 .failureHandler(new LocalAuthenticationFailureHandler())
                 .permitAll()
                 .and()
                 .logout().permitAll()
-                .and().csrf().disable();
-                //.exceptionHandling().accessDeniedHandler(deniedHandler);
+                .and().csrf().disable()
+                .exceptionHandling().accessDeniedHandler(deniedHandler);
 
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/static/**","/login_page","/index.html");
     }
 
     @Bean

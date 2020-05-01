@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface MenuMapper {
 
-    List<Menu> getAllMenu();
+    List<Menu> getAllMenus();
+
+    List<Menu> getAllMenusWithRole();
 }
