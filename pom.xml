@@ -22,7 +22,7 @@
         <mybatis-spring.version>2.0.4</mybatis-spring.version>
         <!-- test version-->
         <mockito.version>3.3.3</mockito.version>
-        <junit.version>4.13</junit.version>
+        <junit.version>4.13.1</junit.version>
         <!-- other dependency -->
         <fileupload.version>1.4</fileupload.version>
         <jedis.version>3.2.0</jedis.version>
